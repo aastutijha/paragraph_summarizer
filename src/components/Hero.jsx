@@ -11,7 +11,7 @@ const Hero = () => {
         <button
           type='button'
           onClick={() =>
-            window.open("https://github.com/thealonemusk/AI-summariser", "_blank")
+            window.open("https://github.com/aastutijha/paragraph_summarizer", "_blank")
           }
           className='black_btn'
         >
@@ -24,7 +24,7 @@ const Hero = () => {
         <span className='orange_gradient '>OpenAI GPT-4</span>
       </h1>
       <h2 className='desc'>
-        Simplify your reading with Summize, an open-source article summarizer
+        Simplify your reading with Summize, an open-source paragraph summarizer
         that transforms lengthy articles into clear and concise summaries
       </h2>
     </header>
