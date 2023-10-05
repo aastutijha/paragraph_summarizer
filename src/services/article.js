@@ -4,11 +4,13 @@ export const articleApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://paragraphsummariser.onrender.com/",
   }),
-endpoints: (builder) => ({
+  endpoints: (builder) => ({
     getSummary: builder.query({
       query: (params) =>
         `/summarize?url=${encodeURIComponent(params.articleUrl)}&length=3`,
     }),
   }),
 });
+
 export const { useLazyGetSummaryQuery } = articleApi;
+
