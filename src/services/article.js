@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
 export const articleApi = createApi({
   reducerPath: "articleApi",
   baseQuery: fetchBaseQuery({
@@ -6,11 +7,17 @@ export const articleApi = createApi({
   }),
   endpoints: (builder) => ({
     getSummary: builder.query({
-      query: (params) =>
-        `/summarize?url=${encodeURIComponent(params.articleUrl)}&length=3`,
+      query: (text) => ({
+        url: `/summarize/`,
+        method: "POST",
+        body: { text },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
     }),
   }),
 });
 
-export const { useLazyGetSummaryQuery } = articleApi;
+export const { useGetSummaryQuery } = articleApi;
 
