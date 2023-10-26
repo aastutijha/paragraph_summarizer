@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { copy, linkIcon, loader, tick } from "../assets";
-import { useGetSummaryQuery } from "../services/article"; // Import the new query
+import { useGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
   const [article, setArticle] = useState({
@@ -10,13 +10,10 @@ const Demo = () => {
   const [allArticles, setAllArticles] = useState([]);
   const [copied, setCopied] = useState("");
 
-  const { data, error, isLoading } = useGetSummaryQuery(article.url); // Use the new query
+  const { data, error, isLoading } = useGetSummaryQuery({ text: article.url });
 
-  // Load data from localStorage on mount
   useEffect(() => {
-    const articlesFromLocalStorage = JSON.parse(
-      localStorage.getItem("articles")
-    );
+    const articlesFromLocalStorage = JSON.parse(localStorage.getItem("articles"));
 
     if (articlesFromLocalStorage) {
       setAllArticles(articlesFromLocalStorage);
@@ -31,9 +28,8 @@ const Demo = () => {
     if (existingArticle) {
       setArticle(existingArticle);
     } else {
-      // Make the API call to summarize the text
       try {
-        const response = await fetch("https://paragraphsummariser.onrender.com/summarize/", {
+        const response = await fetch("https://paragraphsummariser-pcpu.onrender.com/summarize/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -49,7 +45,8 @@ const Demo = () => {
           setAllArticles(updatedAllArticles);
           localStorage.setItem("articles", JSON.stringify(updatedAllArticles));
         } else {
-          console.error("API request failed:", response.status, response.statusText);
+          const result = await response.json();
+          console.error("API request failed:", result.detail);
         }
       } catch (error) {
         console.error("API request failed:", error);
@@ -72,7 +69,7 @@ const Demo = () => {
   return (
     <section className="mt-16 w-full max-w-xl">
       {/* Search */}
-      <div className="flex flex-col w-full gap-2">
+       <div className="flex flex-col w-full gap-2">
         <form
           className="relative flex justify-center items-center"
           onSubmit={handleSubmit}
