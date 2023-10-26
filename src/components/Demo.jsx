@@ -29,14 +29,19 @@ const Demo = () => {
       setArticle(existingArticle);
     } else {
       try {
-        const response = await fetch("https://paragraphsummariser-pcpu.onrender.com/summarize/", {
+        console.log(article.url)
+        const response = await fetch("https://paragraphsummariser-pcpu.onrender.com/summarize", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: JSON.stringify({ text: article.url }),
+          body: new URLSearchParams({
+            text: article.url,
+            // Add more fields if required
+          }).toString(),
         });
 
+        console.log(response);
         if (response.ok) {
           const result = await response.json();
           const newArticle = { url: article.url, summary: result.summary };
@@ -69,7 +74,7 @@ const Demo = () => {
   return (
     <section className="mt-16 w-full max-w-xl">
       {/* Search */}
-       <div className="flex flex-col w-full gap-2">
+      <div className="flex flex-col w-full gap-2">
         <form
           className="relative flex justify-center items-center"
           onSubmit={handleSubmit}

@@ -10,14 +10,15 @@ export const articleApi = createApi({
       query: (text) => ({
         url: `/summarize/`,
         method: "POST",
-        body: { text }, 
+        body: new URLSearchParams({ text }).toString(), // Convert to x-www-form-urlencoded
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded", // Set the content type
         },
       }),
     }),
   }),
 });
+
 
 export const { useGetSummaryQuery } = articleApi;
 
